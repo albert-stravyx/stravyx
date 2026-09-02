@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stravyx — APP 8 live-ops gate close-out</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stravyx-briefing.css">
+<style>
+/* Shared Stravyx briefing stylesheet (E Security dock-pilot visual language).
+   Each HTML also inlines this so a single file can be emailed or opened offline. */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-border:rgba(29,158,117,0.25);--teal-deep:#085041;
+  --charcoal:#1A1A18;--mid:#5F5E5A;--soft:#9A9990;
+  --off-white:#F7F6F2;--white:#FFFFFF;
+  --border:rgba(26,26,24,0.1);--border-strong:rgba(26,26,24,0.18);
+  --amber:#B07020;--amber-light:#FBF3E7;--amber-border:rgba(176,112,32,0.25);
+  --red:#B83228;--red-light:#FDEEEC;--red-border:rgba(184,50,40,0.2);
+  --blue:#1A5CA8;--blue-light:#EAF1FB;--blue-border:rgba(26,92,168,0.2);
+  --green:#2A6049;--mint:#5DCAA5;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--charcoal);font-size:15px;line-height:1.65;}
+header{background:var(--charcoal);padding:52px max(64px, calc(50% - 456px)) 44px;}
+.header-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+header h1{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;line-height:1.2;color:#fff;max-width:760px;margin-bottom:10px;}
+header h1 em{color:var(--mint);font-style:italic;}
+header p{font-size:15px;color:rgba(255,255,255,0.55);max-width:640px;margin-bottom:24px;line-height:1.6;}
+.header-meta{display:flex;gap:40px;flex-wrap:wrap;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);}
+.meta-item{font-size:13px;color:rgba(255,255,255,0.4);}
+.meta-item span{color:rgba(255,255,255,0.85);font-weight:500;}
+main{padding:52px 64px 72px;max-width:1040px;margin:0 auto;}
+.section{margin-bottom:52px;}
+.section-header{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.section-num{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);min-width:28px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--charcoal);}
+.section-sub{font-size:13.5px;color:var(--soft);margin-top:-14px;margin-bottom:22px;max-width:720px;}
+.parties{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.parties th{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);padding:12px 16px;border-bottom:1px solid var(--border);background:var(--off-white);text-align:left;}
+.parties td{font-size:13.5px;color:#4A4A47;padding:16px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;}
+.parties tr:last-child td{border-bottom:none;}
+.entity-name{font-family:'DM Serif Display',serif;font-size:16px;color:var(--charcoal);margin-bottom:4px;}
+.entity-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:2px;}
+.tag-customer{background:var(--blue-light);color:var(--blue);}
+.tag-supplier{background:var(--amber-light);color:var(--amber);}
+.tag-operator{background:var(--red-light);color:var(--red);}
+.tag-stravyx{background:var(--teal-light);color:var(--teal-deep);}
+.tag-blocker{background:var(--red-light);color:var(--red);}
+.tag-high{background:var(--amber-light);color:var(--amber);}
+.tag-medium{background:var(--blue-light);color:var(--blue);}
+.tag-never{background:var(--red-light);color:var(--red);}
+.tag-ok{background:var(--teal-light);color:var(--teal-deep);}
+.provide-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.provide-card{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:0 12px 12px 0;padding:18px 22px;}
+.provide-card h4{font-size:13.5px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.provide-card p{font-size:13px;color:var(--mid);line-height:1.6;}
+.not-card{background:var(--off-white);border:1px dashed var(--border-strong);border-radius:12px;padding:18px 22px;margin-top:16px;}
+.not-card h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);margin-bottom:6px;}
+.not-card p,.not-card li{font-size:13px;color:var(--mid);}
+.not-card ul{margin:6px 0 0 18px;}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.status-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
+.status-col.done h4{color:var(--teal);}
+.status-col.open h4{color:var(--amber);}
+.status-item{display:flex;gap:10px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:13.5px;color:#4A4A47;line-height:1.5;}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.dot-done{background:var(--teal);}
+.dot-open{background:var(--amber);}
+.dot-block{background:var(--red);}
+.status-item strong{color:var(--charcoal);}
+.callout{border-radius:8px;padding:14px 18px;font-size:13.5px;line-height:1.65;margin-top:18px;}
+.c-amber{background:var(--amber-light);border-left:3px solid var(--amber);color:#7A4510;}
+.c-teal{background:var(--teal-light);border-left:3px solid var(--teal);color:var(--teal-deep);}
+.c-red{background:var(--red-light);border-left:3px solid var(--red);color:#7A241C;}
+.c-blue{background:var(--blue-light);border-left:3px solid var(--blue);color:#143F78;}
+.callout strong{font-weight:600;}
+.story{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;}
+.story .who{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.story h4{font-family:'DM Serif Display',serif;font-size:18px;color:var(--charcoal);margin-bottom:8px;}
+.story p{font-size:13.5px;color:#4A4A47;}
+.finding{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:16px;}
+.finding h4{font-family:'DM Serif Display',serif;font-size:18px;margin:8px 0 10px;}
+.finding p{font-size:13.5px;color:#4A4A47;margin-bottom:10px;}
+.finding .label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-top:12px;margin-bottom:4px;}
+.prose{font-size:14.5px;color:#4A4A47;max-width:760px;}
+.prose p{margin-bottom:12px;}
+.prose ol,.prose ul{margin:0 0 14px 20px;}
+.prose li{margin-bottom:6px;}
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.doc-link{display:block;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px 24px;text-decoration:none;color:inherit;}
+.doc-link:hover{border-color:var(--teal);}
+.doc-link .who{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.doc-link h3{font-family:'DM Serif Display',serif;font-size:20px;color:var(--charcoal);margin-bottom:8px;}
+.doc-link p{font-size:13.5px;color:var(--mid);}
+.pack-meta{font-size:12px;color:var(--soft);margin-top:12px;font-family:'DM Mono',monospace;}
+footer{max-width:1040px;margin:0 auto;padding:24px 64px 40px;font-size:12px;color:var(--soft);border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:'DM Mono',monospace;}
+footer a{color:var(--teal-deep);}
+@media(max-width:800px){header,main,footer{padding-left:20px;padding-right:20px;}.provide-grid,.status-grid,.doc-grid{grid-template-columns:1fr;}}
+@media print{header{padding:28px 24px;}main,footer{padding-left:24px;padding-right:24px;}a{color:inherit;}}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Internal · Homework pack · Not legal advice</div>
+  <h1>Lift the live-ops APP 8 blocker, <em>or do not enter it.</em></h1>
+  <p>For Liz (Consent &amp; Privacy Policy v4, DPIA) and Joel (gate owner). Gate is still open. Manual photo cupboard (S0) and a DJI Cloud API licence application may proceed. Production live radio, live map, auto-upload, livestream, and dock remote-control may not.</p>
+  <div class="header-meta">
+    <div class="meta-item">Prepared for <span>Liz Ip · Joel</span></div>
+    <div class="meta-item">As at <span>16 August 2026</span></div>
+    <div class="meta-item">Status <span>Gate open · fail-closed</span></div>
+  </div>
+</header>
+
+<main>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">One-page brief</span></div>
+  <div class="section-sub">Stravyx is a shop. Some operators will later plug a DJI remote into our cloud. That radio can involve photos of people’s homes, a pin over a house, and computers outside Australia — including DJI checking a licence.</div>
+  <div class="status-grid">
+    <div class="status-col done">
+      <h4>Allowed now</h4>
+      <div class="status-item"><span class="status-dot dot-done"></span><span>Book → Accept → operator <strong>manually uploads</strong> in Stravyx</span></div>
+      <div class="status-item"><span class="status-dot dot-done"></span><span>Hold, <strong>Release</strong>, customer download (S0)</span></div>
+      <div class="status-item"><span class="status-dot dot-done"></span><span>Apply for <strong>DJI Cloud API licence</strong> (paperwork)</span></div>
+      <div class="status-item"><span class="status-dot dot-done"></span><span>Ordinary “we collect site photos” notices for the manual path</span></div>
+    </div>
+    <div class="status-col open">
+      <h4>Blocked until this pack is signed</h4>
+      <div class="status-item"><span class="status-dot dot-open"></span><span>Live map of the aircraft</span></div>
+      <div class="status-item"><span class="status-dot dot-open"></span><span><strong>Automatic</strong> photos from the DJI remote</span></div>
+      <div class="status-item"><span class="status-dot dot-open"></span><span>Livestream to the customer</span></div>
+      <div class="status-item"><span class="status-dot dot-open"></span><span>Dock “fly from the office” commands</span></div>
+      <div class="status-item"><span class="status-dot dot-open"></span><span>Production MQTT radio</span></div>
+    </div>
+  </div>
+  <div class="callout c-amber"><strong>Do not mix</strong> this review with APP 3/5 operator-database outreach. Different data, different notices.</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">01a</span><span class="section-title">What if we never use live radio or automatic sync?</span></div>
+  <div class="prose">
+    <p>Then you do <strong>not</strong> need to close this live-ops APP 8 gate to ship the product. You simply do not enter it. The §13.16 blocker for those features stays <strong>parked</strong>, not failed. Engineering must not turn on MQTT, Connect Pilot, live map, or auto-upload. The marketplace file loop can still go live (S0).</p>
+    <p>APP 8 does not disappear entirely. If our cupboard is in <strong>Tokyo</strong>, sending house photos overseas is APP 8 because of <em>our hosting</em>, not DJI. Liz still needs collection notices and a residency call (D3).</p>
+  </div>
+  <div class="callout c-teal"><strong>How Joel can record this:</strong> “Live-ops A is files-only. No live radio, no auto-upload. §13.16 gate remains open; production must fail-closed for Connect Pilot. S0 manual path approved.” Applying for a DJI licence now is not turning the radio on.</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Who owns what</span></div>
+  <table class="parties">
+    <tr>
+      <th style="width:18%;">Who</th>
+      <th>Owns</th>
+    </tr>
+    <tr>
+      <td><span class="entity-tag tag-customer">Privacy</span><div class="entity-name">Liz</div></td>
+      <td>v4 redline; DPIA / hop list; customer and operator notices; confirm APP 3/5 stays separate; DJI DPA countries (<strong>verify</strong>, do not guess).</td>
+    </tr>
+    <tr>
+      <td><span class="entity-tag tag-supplier">Gate</span><div class="entity-name">Joel</div></td>
+      <td>What Live-ops A actually offers (live map? auto photos?); commercial fail-closed; written <strong>gate closed</strong>.</td>
+    </tr>
+    <tr>
+      <td><span class="entity-tag tag-stravyx">Build</span><div class="entity-name">Engineering</div></td>
+      <td>Hide Connect Pilot / live map / auto-upload until sign-off; never put secrets in the phone; S0 cupboard can ship without this gate.</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">In this gate vs out</span></div>
+  <table class="parties">
+    <tr>
+      <th>Behaviour</th>
+      <th>This live-ops APP 8 gate?</th>
+    </tr>
+    <tr><td>Taps status; uploads in the Stravyx website</td><td><span class="entity-tag tag-ok">No — S0 may ship</span> (still: where we store files; collection notices)</td></tr>
+    <tr><td>Customer live map of the aircraft</td><td><span class="entity-tag tag-never">Yes</span></td></tr>
+    <tr><td>Automatic photos from Pilot 2</td><td><span class="entity-tag tag-never">Treat as yes</span> until you exclude auto site imagery</td></tr>
+    <tr><td>Live video / dock remote commands</td><td><span class="entity-tag tag-never">Yes</span> — named in §13.16; <em>out of Live-ops A</em> until a later gate</td></tr>
+    <tr><td>DJI licence / heartbeat while using our Sydney radio</td><td><span class="entity-tag tag-never">Yes</span> — hosting in Australia does not delete this hop</td></tr>
+    <tr><td>Alex’s own DJI app cloud backup</td><td><span class="entity-tag tag-ok">Not this gate</span></td></tr>
+    <tr><td>HubSpot leads / operator outreach</td><td><span class="entity-tag tag-ok">Out of this pack</span> (APP 3/5)</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Stories you can sign</span></div>
+  <div class="story">
+    <div class="who">Priya · customer</div>
+    <h4>Told in plain language; downloads only after Release</h4>
+    <p>Site photos are collected to deliver the job. If a live map is on, her job location may be shown <em>to her</em> while it runs. She does not get a live pin unless that path is approved and disclosed. Fail-closed: if live map is not approved, she still gets files via manual upload.</p>
+  </div>
+  <div class="story">
+    <div class="who">Alex · operator (ReOC)</div>
+    <h4>Gate open: no Connect Pilot. Gate closed: his room only</h4>
+    <p>While the gate is open he taps status and uploads by hand. When you close it for approved features, he may check Pilot 2 into <strong>his company’s</strong> Stravyx room. Brooke must never see his jobs. Upload tags apply only to this flight on this job.</p>
+  </div>
+  <div class="story">
+    <div class="who">Stravyx admin</div>
+    <h4>Live connect can be turned off without taking down the shop</h4>
+    <p>If disclosure is withdrawn or a subprocessor changes country, booking and manual upload stay up.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">Scenarios (homework rows)</span></div>
+  <table class="parties">
+    <tr><th>ID</th><th>What happens</th><th>This gate?</th><th>Write</th></tr>
+    <tr><td><strong>P1</strong></td><td>Manual upload; files stay in Sydney</td><td>No</td><td>Collection notice; retention; ReOC vs Stravyx</td></tr>
+    <tr><td><strong>P2</strong></td><td>Manual upload; cupboard in Tokyo (today’s demo)</td><td>No for DJI radio</td><td>APP 8 for <em>our</em> storage region; D3 residency</td></tr>
+    <tr><td><strong>P3</strong></td><td>Live map; photos still manual</td><td>Yes</td><td>v4 + DPIA for live location; pin notice; fail-closed</td></tr>
+    <tr><td><strong>P4</strong></td><td>Auto photos; no live map</td><td>Yes until excluded</td><td>Auto site imagery in or out. Recommended: <strong>in</strong></td></tr>
+    <tr><td><strong>P5</strong></td><td>“Radio is in Sydney so APP 8 is done”</td><td>Yes for any live radio</td><td>Name DJI as overseas recipient of licence/technical data; Liz confirms with DJI</td></tr>
+    <tr><td><strong>P6</strong></td><td>Alex’s own DJI cloud backup</td><td>No</td><td>One sentence: we are not that cloud</td></tr>
+    <tr><td><strong>R1</strong></td><td>Two companies, one shared hotel</td><td>Isolation, not only APP 8</td><td>One room per ReOC, or accept shared-room risk in writing</td></tr>
+    <tr><td><strong>R2</strong></td><td>Wrong job’s photos</td><td>Customer-safety</td><td>Hold then Release; capture session (“this-flight wristband”)</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Hop inventory (DPIA homework)</span></div>
+  <div class="section-sub">Unverified = Liz to confirm with DJI DPA / vendor, not engineering guesswork.</div>
+  <table class="parties">
+    <tr><th>ID</th><th>Hop</th><th>Country today</th></tr>
+    <tr><td>H1</td><td>Browser → Stravyx API</td><td>Demo often Tokyo</td></tr>
+    <tr><td>H2</td><td>Manual file upload → object storage</td><td>Target Sydney; demo often not</td></tr>
+    <tr><td>H3</td><td>Optional malware / type scan</td><td>TBD — if overseas, APP 8</td></tr>
+    <tr><td>H4</td><td>Pilot 2 → our MQTT / HTTPS</td><td>Intended Sydney</td></tr>
+    <tr><td>H5</td><td>STS put → S3 / MinIO</td><td>Must match residency ruling</td></tr>
+    <tr><td>H6</td><td>DJI licence / Cloud API control plane</td><td><strong>Unverified, likely overseas</strong></td></tr>
+    <tr><td>H7</td><td>Customer signed download</td><td>Same as H2</td></tr>
+    <tr><td>H8</td><td>Livestream CDN / WebRTC</td><td>TBD — new gate</td></tr>
+    <tr><td>H9</td><td>FlightHub 2</td><td>Later L2; new DPIA</td></tr>
+    <tr><td>H10</td><td>HubSpot leads</td><td>Out of this pack (APP 3/5)</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Decision log (this removes the blocker)</span></div>
+  <div class="section-sub">Recommended defaults in bold. Tick after Liz/Joel fill the right-hand column in the markdown or PDF.</div>
+  <table class="parties">
+    <tr><th>#</th><th>Decision</th><th>Recommended default</th></tr>
+    <tr><td>D0</td><td>Ship files-only this release?</td><td><strong>Yes</strong>, if you want to launch without closing §13.16. Does not skip D3–D6 for manual photos.</td></tr>
+    <tr><td>D1</td><td>Automatic site imagery in this gate?</td><td><strong>Yes — in-gate</strong> until explicitly excluded.</td></tr>
+    <tr><td>D2</td><td>Live map in first live-ops?</td><td><strong>Files-only</strong> unless you close this pack for live map.</td></tr>
+    <tr><td>D3</td><td>Storage residency</td><td><strong>Sydney</strong> for any production customer imagery. Demo Tokyo is not production SoT.</td></tr>
+    <tr><td>D4</td><td>Lawful basis — customer</td><td>Notified collection + consent if optional live map. Counsel, not this doc.</td></tr>
+    <tr><td>D5</td><td>Lawful basis — operator</td><td>Spell the split: ReOC flies; we host the shop.</td></tr>
+    <tr><td>D6</td><td>Retention</td><td>Job files N months; legal hold longer.</td></tr>
+    <tr><td>D7</td><td>Subprocessors in v4</td><td>Hosting region; <strong>DJI</strong> (licence/technical); scanner TBD; no FH2 until L2.</td></tr>
+    <tr><td>D8</td><td>Fail-closed commercially OK?</td><td><strong>Yes</strong> — live connect off, manual still completes the job.</td></tr>
+    <tr><td>D9</td><td>Docks / livestream / DRC in this sign-off?</td><td><strong>No</strong> — later gates.</td></tr>
+    <tr><td>D10</td><td>Gate closed for which features?</td><td>List explicitly. Engineering will not infer.</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">Action checklist</span></div>
+  <div class="provide-grid">
+    <div class="provide-card">
+      <h4>Liz</h4>
+      <p>Redline v4 for live radio + (if D1 yes) auto imagery + DJI overseas licence hop. DPIA covering H1–H7; mark H6 verified or assumed. Customer notice at booking; operator notice at Connect Pilot. Confirm APP 3/5 is a different document. Request DJI DPA — do not block licence <em>application</em>.</p>
+    </div>
+    <div class="provide-card">
+      <h4>Joel</h4>
+      <p>Fill D1–D10 (especially D1, D2, D3, D10). Accept fail-closed (D8). Record gate closed — or “closed for X, still open for Y” — in the sign-off block and DECISIONS.md.</p>
+    </div>
+    <div class="provide-card">
+      <h4>Engineering (after sign-off)</h4>
+      <p>Fail-closed UX while gate open. S0 manual cupboard may ship without waiting. No production MQTT until D10 is closed. Not a substitute for Liz/Joel signatures.</p>
+    </div>
+    <div class="provide-card">
+      <h4>Parallel (does not close the gate)</h4>
+      <p>DJI developer account + Cloud API licence application (Platform / Joel). One ReOC partner + supported hardware list (Product).</p>
+    </div>
+  </div>
+  <div class="not-card">
+    <h4>Sign-off still empty</h4>
+    <p>Until date, Liz, Joel, in/out features, fail-closed, auto-imagery ruling, residency, and v4/DPIA link are filled, the live-ops APP 8 gate remains <strong>open</strong>. Manual per-mission upload remains the legal production path for files.</p>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div>Stravyx Pty Ltd · ACN 696 964 271 · Not legal advice</div>
+  <div><a href="stravyx-live-ops-briefings.html">Live-ops pack</a> · <a href="stravyx-app8-live-ops-gate-closeout.pdf">PDF</a></div>
+</footer>
+
+</body>
+</html>

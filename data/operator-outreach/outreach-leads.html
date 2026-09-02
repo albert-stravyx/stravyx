@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Founding Operator outreach leads — Stravyx</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --surface: #171a21;
+      --surface-2: #1e232c;
+      --border: #2a3140;
+      --text: #e8eaed;
+      --text-2: #9aa3b2;
+      --text-3: #6b7382;
+      --accent: #4c8bf5;
+      --accent-soft: rgba(76, 139, 245, 0.14);
+      --success: #3ecf8e;
+      --success-soft: rgba(62, 207, 142, 0.12);
+      --warning: #e6a23c;
+      --warning-soft: rgba(230, 162, 60, 0.12);
+      --bar-1: #4c8bf5;
+      --bar-2: #7aa2f7;
+      --bar-3: #a0b8f0;
+      --font: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", "SF Mono", ui-monospace, monospace;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f4f6f9;
+        --surface: #ffffff;
+        --surface-2: #f0f3f7;
+        --border: #d8dee8;
+        --text: #141820;
+        --text-2: #5a6474;
+        --text-3: #7a8494;
+        --accent-soft: rgba(45, 110, 210, 0.1);
+        --success-soft: rgba(24, 160, 100, 0.1);
+        --warning-soft: rgba(180, 120, 20, 0.12);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    p { margin: 0; }
+    .muted { color: var(--text-2); }
+    .dim { color: var(--text-3); font-size: 0.85rem; }
+    .small { font-size: 0.875rem; }
+    .semibold { font-weight: 600; color: var(--text); }
+
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-2);
+      background: transparent;
+    }
+    .pill.active {
+      background: var(--accent-soft);
+      border-color: transparent;
+      color: var(--accent);
+      font-weight: 550;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 800px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .stat .value {
+      font-size: 1.75rem;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .stat .value.success { color: var(--success); }
+    .stat .label {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--text-2);
+    }
+
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: var(--warning-soft);
+      border: 1px solid color-mix(in srgb, var(--warning) 35%, transparent);
+    }
+    .callout .icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      color: var(--warning);
+    }
+    .callout strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+    }
+    .callout p { font-size: 0.875rem; color: var(--text-2); }
+
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 800px) {
+      .charts { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 12px 16px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .card-body { padding: 16px; }
+
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      height: 180px;
+      padding-top: 8px;
+    }
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 6px;
+      min-width: 0;
+    }
+    .bar {
+      width: 100%;
+      max-width: 48px;
+      border-radius: 4px 4px 0 0;
+      background: var(--bar-1);
+      min-height: 2px;
+      position: relative;
+    }
+    .bar-col:nth-child(2) .bar { background: var(--bar-2); }
+    .bar-col:nth-child(3) .bar { background: var(--bar-3); }
+    .bar-col:nth-child(n+4) .bar { background: var(--accent); opacity: 0.85; }
+    .bar-val {
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      color: var(--text-2);
+    }
+    .bar-label {
+      font-size: 0.7rem;
+      color: var(--text-3);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .section-head { display: flex; flex-direction: column; gap: 8px; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-2);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .mono { font-family: var(--mono); font-size: 0.8rem; }
+    a.tel {
+      color: var(--text);
+      text-decoration: none;
+    }
+    a.tel:hover { color: var(--accent); text-decoration: underline; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .howto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 800px) {
+      .howto { grid-template-columns: 1fr; }
+    }
+    .howto > div {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .links { display: flex; flex-wrap: wrap; gap: 16px; }
+    .links a {
+      color: var(--accent);
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+    .links a:hover { text-decoration: underline; }
+
+    .meta { margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>Founding Operator outreach leads</h1>
+      <p class="muted" style="margin-top: 8px;">
+        Scraped 25 Jul 2026 from public commercial directories. Primary targets
+        are CASA ReOC holders in Sydney and Melbourne with published mobiles.
+      </p>
+      <div class="pills">
+        <span class="pill active">MVP supply: own ReOC</span>
+        <span class="pill">Source: Drones For Hire directory</span>
+        <span class="pill">CASA register: 3,267 ReOC holders</span>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="Summary metrics">
+      <div class="stat">
+        <div class="value">911</div>
+        <div class="label">ReOC in directory</div>
+      </div>
+      <div class="stat">
+        <div class="value success">277</div>
+        <div class="label">Ready to call (metro)</div>
+      </div>
+      <div class="stat">
+        <div class="value">137</div>
+        <div class="label">Sydney ReOC + mobile</div>
+      </div>
+      <div class="stat">
+        <div class="value">140</div>
+        <div class="label">Melbourne ReOC + mobile</div>
+      </div>
+    </section>
+
+    <aside class="callout" role="note">
+      <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l6.518 11.594c.75 1.335-.213 2.982-1.742 2.982H3.48c-1.53 0-2.493-1.647-1.743-2.982L8.257 3.1zM11 14a1 1 0 10-2 0 1 1 0 002 0zm-1-7a1 1 0 00-1 1v3a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+      </svg>
+      <div>
+        <strong>Privacy / APP note</strong>
+        <p>
+          Mobiles come from operators who self-published them for commercial hire.
+          Still run the planned Privacy Act review before bulk SMS/email from the
+          CASA register alone. Prefer Founding Operator invite framing over cold spam.
+        </p>
+      </div>
+    </aside>
+
+    <section class="charts">
+      <article class="card">
+        <div class="card-header">Licence mix in directory</div>
+        <div class="card-body">
+          <div class="chart" role="img" aria-label="Bar chart: ReOC 911, RePL/ARN 1846, Other/unknown 46">
+            <!-- max = 1846 -->
+            <div class="bar-col">
+              <span class="bar-val">911</span>
+              <div class="bar" style="height: calc(911 / 1846 * 100%)"></div>
+              <span class="bar-label">ReOC</span>
+            </div>
+            <div class="bar-col">
+              <span class="bar-val">1846</span>
+              <div class="bar" style="height: 100%"></div>
+              <span class="bar-label">RePL/ARN</span>
+            </div>
+            <div class="bar-col">
+              <span class="bar-val">46</span>
+              <div class="bar" style="height: calc(46 / 1846 * 100%)"></div>
+              <span class="bar-label">Other/unknown</span>
+            </div>
+          </div>
+          <p class="dim" style="margin-top: 8px;">Source: Drones For Hire map · n=2,803 unique listings</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-header">ReOC + mobile by state</div>
+        <div class="card-body">
+          <div class="chart" role="img" aria-label="Bar chart of ReOC holders with mobile by Australian state">
+            <!-- max = 274 -->
+            <div class="bar-col"><span class="bar-val">274</span><div class="bar" style="height: 100%"></div><span class="bar-label">NSW</span></div>
+            <div class="bar-col"><span class="bar-val">204</span><div class="bar" style="height: calc(204 / 274 * 100%)"></div><span class="bar-label">QLD</span></div>
+            <div class="bar-col"><span class="bar-val">198</span><div class="bar" style="height: calc(198 / 274 * 100%)"></div><span class="bar-label">VIC</span></div>
+            <div class="bar-col"><span class="bar-val">99</span><div class="bar" style="height: calc(99 / 274 * 100%)"></div><span class="bar-label">WA</span></div>
+            <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height: calc(44 / 274 * 100%)"></div><span class="bar-label">SA</span></div>
+            <div class="bar-col"><span class="bar-val">16</span><div class="bar" style="height: calc(16 / 274 * 100%)"></div><span class="bar-label">ACT</span></div>
+            <div class="bar-col"><span class="bar-val">8</span><div class="bar" style="height: calc(8 / 274 * 100%)"></div><span class="bar-label">TAS</span></div>
+            <div class="bar-col"><span class="bar-val">5</span><div class="bar" style="height: calc(5 / 274 * 100%)"></div><span class="bar-label">NT</span></div>
+          </div>
+          <p class="dim" style="margin-top: 8px;">National ReOC pool in directory with phone · launch focus NSW/VIC</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="section-head">
+      <h2>Wave 1 — top ReOC leads (Sydney first)</h2>
+      <p class="muted small">
+        Start with
+        <span class="semibold">data/operator-outreach/06-founding-operator-wave1-top200.csv</span>
+        (200 ranked). Full dialable metro list:
+        <span class="semibold">04-ready-call-reoc-sydney-melbourne.csv</span>
+        (277).
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Business</th>
+              <th>Contact</th>
+              <th>Mobile</th>
+              <th>ReOC</th>
+              <th>Metro</th>
+              <th>Suburb</th>
+              <th>Reviews</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>Eagle-Eye Aerials</td>
+              <td>Bill B.</td>
+              <td><a class="tel mono" href="tel:+61423616440">0423 616 440</a></td>
+              <td class="mono">CASA.ReOC.0062</td>
+              <td>Sydney</td>
+              <td>Lindfield</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>Shooting Picture Partners</td>
+              <td>Shane M.</td>
+              <td><a class="tel mono" href="tel:+61418161829">0418 161 829</a></td>
+              <td class="mono">CASA.ReOC.0277</td>
+              <td>Sydney</td>
+              <td>Newport</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>DroneFX</td>
+              <td>Ollie D.</td>
+              <td><a class="tel mono" href="tel:+61411513576">0411 513 576</a></td>
+              <td class="mono">CASA.ReOC.0227</td>
+              <td>Sydney</td>
+              <td>North Ryde</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>Helivision Solutions</td>
+              <td>Richard T.</td>
+              <td><a class="tel mono" href="tel:+61402443143">0402 443 143</a></td>
+              <td class="mono">CASA.ReOC.538</td>
+              <td>Sydney</td>
+              <td>Cranebrook</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>SkyHigh UAV</td>
+              <td>Stephen M.</td>
+              <td><a class="tel mono" href="tel:+61402464948">0402 464 948</a></td>
+              <td class="mono">CASA.ReOC.0633</td>
+              <td>Sydney</td>
+              <td>Woodbine</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>Hoverscape</td>
+              <td>Danny E.</td>
+              <td><a class="tel mono" href="tel:+61415462707">0415 462 707</a></td>
+              <td class="mono">CASA.ReOC.0137</td>
+              <td>Sydney</td>
+              <td>Clovelly</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>High Exposure</td>
+              <td>Dave M.</td>
+              <td><a class="tel mono" href="tel:+61435308616">0435 308 616</a></td>
+              <td class="mono">CASA.ReOC.6409</td>
+              <td>Sydney</td>
+              <td>Sutherland</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>JJB Photography</td>
+              <td>Jeff B.</td>
+              <td><a class="tel mono" href="tel:+61412552122">0412 552 122</a></td>
+              <td class="mono">CASA.ReOC.6752</td>
+              <td>Sydney</td>
+              <td>Summer Hill</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>Ripper Corp.</td>
+              <td>Jason Young C.</td>
+              <td><a class="tel mono" href="tel:+61404944415">0404 944 415</a></td>
+              <td class="mono">CASA.ReOC.0734</td>
+              <td>Sydney</td>
+              <td>Sydney</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td><span class="dot" title="Sydney"></span>Sydney Aerial Imagery</td>
+              <td>Kristian B.</td>
+              <td><a class="tel mono" href="tel:+61415321618">0415 321 618</a></td>
+              <td class="mono">CASA.ReOC.6411</td>
+              <td>Sydney</td>
+              <td>Sydney</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Kestrel Media</td>
+              <td>David M.</td>
+              <td><a class="tel mono" href="tel:+61406663897">0406 663 897</a></td>
+              <td class="mono">CASA.ReOC.6405</td>
+              <td>Melbourne</td>
+              <td>Mount Eliza</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>Symmetry Drones</td>
+              <td>Peter W.</td>
+              <td><a class="tel mono" href="tel:+61424149633">0424 149 633</a></td>
+              <td class="mono">CASA.ReOC.7359</td>
+              <td>Melbourne</td>
+              <td>Ringwood North</td>
+              <td>7</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr />
+
+    <section class="section-head">
+      <h2>How to use the files</h2>
+      <div class="howto">
+        <div>
+          <h3>Primary (Founding Operators)</h3>
+          <p class="small muted">
+            02 → 03 → 04 → 06. Only invite
+            <span class="semibold">licence_type=reoc</span>.
+            Pitch: pre-built profile, reduced commission, priority dispatch.
+          </p>
+        </div>
+        <div>
+          <h3>Secondary (verify first)</h3>
+          <p class="small muted">
+            05 has 630 metro listings with mobiles but ARN/RePL IDs — confirm
+            they hold their own ReOC before Founding Operator invite
+            (excluded-category pilots are post-MVP).
+          </p>
+        </div>
+      </div>
+      <p class="small muted">
+        CASA public register confirms ~3,267 active ReOC certificates
+        nationally; directory covers ~28% with contactable ReOC businesses.
+        Gap (~2,300) needs company-name enrichment (ABN/website) before cold
+        outreach — do not blast CASA-only rows without a published contact path.
+      </p>
+      <div class="links">
+        <a href="https://dronesforhire.com.au/drone-operator-directory" rel="noopener noreferrer" target="_blank">Drones For Hire directory</a>
+        <a href="https://www.casa.gov.au/drones/remotely-piloted-aircraft-operators-certificate/remotely-piloted-aircraft-operators-certificate-reoc-holders" rel="noopener noreferrer" target="_blank">CASA ReOC holders search</a>
+      </div>
+    </section>
+
+    <p class="dim meta">
+      Paths under repo: data/operator-outreach/ · Phone CSVs remain gitignored;
+      this HTML summary is intended for internal sharing. Redact before a public remote if needed.
+    </p>
+  </main>
+</body>
+</html>

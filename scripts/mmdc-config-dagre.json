@@ -1,0 +1,7 @@
+{
+  "look": "neo",
+  "theme": "default",
+  "fontFamily": "Recursive, \"Trebuchet MS\", ui-sans-serif, system-ui, sans-serif",
+  "er": { "useMaxWidth": false },
+  "sequence": { "useMaxWidth": false }
+}

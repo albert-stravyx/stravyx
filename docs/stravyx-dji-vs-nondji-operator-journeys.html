@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stravyx — DJI vs non-DJI operators</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stravyx-briefing.css">
+<style>
+/* Inline copy so this file still works if emailed alone */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--teal:#1D9E75;--teal-light:#E1F5EE;--teal-deep:#085041;--charcoal:#1A1A18;--mid:#5F5E5A;--soft:#9A9990;--off-white:#F7F6F2;--white:#FFFFFF;--border:rgba(26,26,24,0.1);--border-strong:rgba(26,26,24,0.18);--amber:#B07020;--amber-light:#FBF3E7;--red:#B83228;--red-light:#FDEEEC;--blue:#1A5CA8;--blue-light:#EAF1FB;--green:#2A6049;--mint:#5DCAA5;}
+body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--charcoal);font-size:15px;line-height:1.65;}
+header{background:var(--charcoal);padding:52px max(64px, calc(50% - 456px)) 44px;}
+.header-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+header h1{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;line-height:1.2;color:#fff;max-width:760px;margin-bottom:10px;}
+header h1 em{color:var(--mint);font-style:italic;}
+header p{font-size:15px;color:rgba(255,255,255,0.55);max-width:640px;margin-bottom:24px;line-height:1.6;}
+.header-meta{display:flex;gap:40px;flex-wrap:wrap;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);}
+.meta-item{font-size:13px;color:rgba(255,255,255,0.4);}
+.meta-item span{color:rgba(255,255,255,0.85);font-weight:500;}
+main{padding:52px 64px 72px;max-width:1040px;margin:0 auto;}
+.section{margin-bottom:52px;}
+.section-header{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.section-num{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);min-width:28px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--charcoal);}
+.section-sub{font-size:13.5px;color:var(--soft);margin-top:-14px;margin-bottom:22px;max-width:720px;}
+.parties{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.parties th{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);padding:12px 16px;border-bottom:1px solid var(--border);background:var(--off-white);text-align:left;}
+.parties td{font-size:13.5px;color:#4A4A47;padding:16px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;}
+.parties tr:last-child td{border-bottom:none;}
+.entity-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:2px;}
+.tag-customer{background:var(--blue-light);color:var(--blue);}
+.tag-operator{background:var(--red-light);color:var(--red);}
+.tag-stravyx{background:var(--teal-light);color:var(--teal-deep);}
+.tag-never{background:var(--red-light);color:var(--red);}
+.tag-ok{background:var(--teal-light);color:var(--teal-deep);}
+.provide-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.provide-card{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:0 12px 12px 0;padding:18px 22px;}
+.provide-card h4{font-size:13.5px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.provide-card p{font-size:13px;color:var(--mid);line-height:1.6;}
+.not-card{background:var(--off-white);border:1px dashed var(--border-strong);border-radius:12px;padding:18px 22px;margin-top:16px;}
+.not-card h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);margin-bottom:6px;}
+.not-card ul{margin:6px 0 0 18px;}
+.not-card li{font-size:13px;color:var(--mid);margin-bottom:4px;}
+.status-item{display:flex;gap:10px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:13.5px;color:#4A4A47;line-height:1.5;}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.dot-done{background:var(--teal);}
+.dot-open{background:var(--amber);}
+.callout{border-radius:8px;padding:14px 18px;font-size:13.5px;line-height:1.65;margin-top:18px;}
+.c-amber{background:var(--amber-light);border-left:3px solid var(--amber);color:#7A4510;}
+.c-teal{background:var(--teal-light);border-left:3px solid var(--teal);color:var(--teal-deep);}
+.story{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;}
+.story .who{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.story h4{font-family:'DM Serif Display',serif;font-size:18px;color:var(--charcoal);margin-bottom:8px;}
+.story p{font-size:13.5px;color:#4A4A47;}
+.prose p{margin-bottom:12px;font-size:14.5px;color:#4A4A47;max-width:760px;}
+.prose ol{margin:0 0 14px 20px;}
+.prose li{margin-bottom:6px;color:#4A4A47;}
+footer{max-width:1040px;margin:0 auto;padding:24px 64px 40px;font-size:12px;color:var(--soft);border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:'DM Mono',monospace;}
+footer a{color:var(--teal-deep);}
+@media(max-width:800px){header,main,footer{padding-left:20px;padding-right:20px;}.provide-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Internal · Reference · Live-ops A</div>
+  <h1>Same shop, different plug. <em>Brand does not change the booking.</em></h1>
+  <p>Non-DJI operators never use DJI Cloud API. They finish jobs in Stravyx with status taps and manual upload. Supported DJI operators may also plug Pilot 2 into Stravyx — same booking, same customer downloads.</p>
+  <div class="header-meta">
+    <div class="meta-item">Audience <span>Founders, operators, product</span></div>
+    <div class="meta-item">As at <span>17 August 2026</span></div>
+    <div class="meta-item">Authority <span>ADR 0005 · architecture Story C</span></div>
+  </div>
+</header>
+
+<main>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">What is the same for everyone</span></div>
+  <div class="section-sub">Stravyx is the marketplace. The customer never needs a DJI or Autel login. Connecting a DJI remote is never required to tap Accept.</div>
+  <div class="prose">
+    <ol>
+      <li>Customer books and pays one <strong>Network Price</strong>.</li>
+      <li>Eligible licensed companies (<strong>ReOC</strong>) see the offer.</li>
+      <li><strong>First to Accept</strong> wins; others are locked out. Full street address appears after Accept (suburb only before).</li>
+      <li>Operator flies the site.</li>
+      <li>Files land in Stravyx, sit <strong>held</strong>, then the operator <strong>Releases</strong> them.</li>
+      <li>Customer downloads from <strong>Stravyx</strong> — not from DJI, Autel, or email.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">What is different (the plug, not the shop)</span></div>
+  <table class="parties">
+    <tr>
+      <th style="width:22%;"></th>
+      <th style="width:39%;">Non-DJI (Autel, Skydio, others)</th>
+      <th style="width:39%;">Supported DJI (Pilot 2 / Dock, after privacy)</th>
+    </tr>
+    <tr>
+      <td><strong>Fly in</strong></td>
+      <td>Their own flying app</td>
+      <td><strong>DJI Pilot 2</strong> on the handheld remote</td>
+    </tr>
+    <tr>
+      <td><strong>DJI Cloud API</strong></td>
+      <td><span class="entity-tag tag-never">Never</span></td>
+      <td><span class="entity-tag tag-ok">Optional</span> hose: remote talks to <em>our</em> cloud</td>
+    </tr>
+    <tr>
+      <td><strong>Progress in Stravyx</strong></td>
+      <td>Operator taps Ready → Airborne → Complete</td>
+      <td>Taps can be filled from live radio; customer may get a coarse map pin if approved</td>
+    </tr>
+    <tr>
+      <td><strong>Files into Stravyx</strong></td>
+      <td>Copy off card/drone, <strong>upload in the website</strong> for this job</td>
+      <td>Pilot 2 can auto-upload, or they can still upload by hand</td>
+    </tr>
+    <tr>
+      <td><strong>If radio / privacy off</strong></td>
+      <td>This <em>is</em> their path</td>
+      <td>They fall back to the same taps + upload</td>
+    </tr>
+  </table>
+  <div class="callout c-teal"><strong>DJI Cloud API</strong> is DJI’s protocol where Pilot 2 (or a Dock) talks to Stravyx-hosted servers — not FlightHub 2. Autel/Skydio cannot speak it. A later Autel connector would be <em>their</em> API, not DJI’s. <strong>Manual</strong> is the spare tyre: non-DJI, unsupported DJI, APP 8 still open, or radio down.</div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Side-by-side journey</span></div>
+  <table class="parties">
+    <tr>
+      <th>Step</th>
+      <th>Customer</th>
+      <th>Non-DJI operator</th>
+      <th>DJI operator (live plug on)</th>
+    </tr>
+    <tr>
+      <td><strong>Book</strong></td>
+      <td>One price</td>
+      <td>Same offer board</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td><strong>Accept</strong></td>
+      <td>Job taken</td>
+      <td>First tap; then address</td>
+      <td>Same — <strong>no</strong> “connect DJI first”</td>
+    </tr>
+    <tr>
+      <td><strong>Fly</strong></td>
+      <td>—</td>
+      <td>Autel / Skydio / etc. app</td>
+      <td>Pilot 2 as usual</td>
+    </tr>
+    <tr>
+      <td><strong>Progress</strong></td>
+      <td>Track Job</td>
+      <td>Taps in Stravyx</td>
+      <td>Live postcards to us; optional pin</td>
+    </tr>
+    <tr>
+      <td><strong>Files</strong></td>
+      <td>—</td>
+      <td>Manual upload for <strong>this job</strong></td>
+      <td>Auto-upload and/or manual</td>
+    </tr>
+    <tr>
+      <td><strong>Release</strong></td>
+      <td>Downloads appear</td>
+      <td>Confirms files belong to this job</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td><strong>Cloud API</strong></td>
+      <td>Never</td>
+      <td><strong>Never</strong></td>
+      <td>Only if Pilot 2 joined Stravyx</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">User stories</span></div>
+  <div class="section-sub">Priya is the customer. Brooke, Alex, Chris, and Dana are operators. Aircraft brand must not change who can win or what Priya pays.</div>
+
+  <div class="story">
+    <div class="who">Story 1 · Autel only</div>
+    <h4>Brooke never opens DJI software</h4>
+    <p>Priya books a roof inspection. Brooke’s Autel-only company taps Accept first. She flies in Autel’s app, taps Ready → Airborne → Complete in Stravyx, copies photos to a laptop, and <strong>Uploads for this job</strong>. Files are held. She presses <strong>Release</strong>. Priya downloads from Stravyx. <strong>DJI Cloud API is not involved.</strong></p>
+  </div>
+  <div class="story">
+    <div class="who">Story 2 · Supported DJI, live radio allowed</div>
+    <h4>Alex plugs Pilot 2 into his company’s Stravyx room</h4>
+    <p>Same booking. Alex wins. His remote is already in his company’s room. He assigns aircraft SN-123, flies in Pilot 2. Priya may see a pin. Photos can auto-land in our cupboard. He Releases. Priya still downloads from Stravyx, not FlightHub. If the radio dies, he finishes like Brooke. The job must not be stuck.</p>
+  </div>
+  <div class="story">
+    <div class="who">Story 3 · APP 8 still open</div>
+    <h4>Owning DJI hardware does not force Cloud API</h4>
+    <p>Live radio is off in production. Alex flies in Pilot 2 locally (screen on the remote, files on the card) and completes <strong>exactly like Brooke</strong>.</p>
+  </div>
+  <div class="story">
+    <div class="who">Story 4 · Mixed fleet</div>
+    <h4>Chris has a Matrice 30 and an Autel</h4>
+    <p>Matrice job (after privacy): he <em>may</em> use Cloud API. Autel job: <strong>always manual</strong> for that aircraft. Accept is one tap either way. He does not need the Matrice online to take an Autel job.</p>
+  </div>
+  <div class="story">
+    <div class="who">Story 5 · Unsupported DJI</div>
+    <h4>Dana’s Mini is manual, same as Autel</h4>
+    <p>A consumer DJI Mini is not on our Cloud API hardware list. We do not tell her to “use Cloud API anyway.”</p>
+  </div>
+  <div class="story">
+    <div class="who">Story 6 · First-to-accept fairness</div>
+    <h4>Priya does not pick a brand</h4>
+    <p>She sees one Network Price, not “DJI vs Autel.” We must <strong>not</strong> rank who gets the job by whose DJI is online. Winner might be Brooke (manual) or Alex (live). Priya still gets raw photos from Stravyx after Release.</p>
+  </div>
+  <div class="story">
+    <div class="who">Story 7 · Radio outage</div>
+    <h4>Already accepted, then the controller cannot reach us</h4>
+    <p>Alex still taps Complete and uploads. Same Release. Same customer download.</p>
+  </div>
+  <div class="story">
+    <div class="who">Story 8 · Later, not Live-ops A</div>
+    <h4>An Autel connector would be Autel’s API, not DJI’s</h4>
+    <p>If we add it, Brooke might one day get auto-upload via <em>their</em> cloud. Maps/3D (Layer 2) stay a Stravyx processing product — Brooke is not sent to FlightHub.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">What we will not do</span></div>
+  <div class="not-card">
+    <h4>Locked product rules</h4>
+    <ul>
+      <li>Require DJI Cloud API (or any DJI account) to Accept or to be paid.</li>
+      <li>Make customers log into a drone-maker website.</li>
+      <li>Leave a job stranded because live radio failed.</li>
+      <li>Rank dispatch by device-online.</li>
+      <li>Pretend manual Track Job is a live map (status labels only, unless a later product/privacy decision adds something like phone GPS).</li>
+    </ul>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div>Stravyx Pty Ltd · ACN 696 964 271</div>
+  <div>Internal reference · <a href="stravyx-live-ops-briefings.html">Live-ops pack</a> · <a href="stravyx-dji-vs-nondji-operator-journeys.pdf">PDF</a></div>
+</footer>
+
+</body>
+</html>

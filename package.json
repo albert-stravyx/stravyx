@@ -1,0 +1,24 @@
+{
+  "name": "stravyx",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev:app": "pnpm --filter @stravyx/app-web dev",
+    "build:app": "pnpm --filter @stravyx/app-web build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:contracts": "vitest run tests/contracts",
+    "test:bdd": "playwright test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "gates": "python scripts/quality_check.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "20.14.10",
+    "happy-dom": "20.11.6",
+    "typescript": "5.5.4",
+    "vitest": "2.1.8"
+  }
+}

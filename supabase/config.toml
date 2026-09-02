@@ -1,0 +1,36 @@
+# A string used to distinguish different Supabase projects on the same host. Defaults to the working directory name when running `supabase init`.
+project_id = "stravyx"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000"]
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+
+# Auth is enforced inside handlers. The gateway must not 401 logged-out
+# POST /api/signup (or /pricing/quote, /health). hubspot-sync is already
+# verify_jwt = false in the hosted project; keep api in the same mode.
+[functions.api]
+verify_jwt = false
+
+[functions.hubspot-sync]
+verify_jwt = false

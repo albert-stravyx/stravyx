@@ -1,0 +1,181 @@
+# Dependencies
+node_modules/
+.venv-pdf/
+.venv-agent/
+**/node_modules/
+
+# Builds / caches
+.next/
+dist/
+build/
+coverage/
+.turbo/
+*.tsbuildinfo
+.pnpm-store/
+# Env & secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+# Python
+__pycache__/
+*.pyc
+# Agent control plane (task/run state is local, not durable knowledge)
+.agent/current-task.yaml
+.agent/runs/
+.agent/locks/*.json
+.agent/metrics/events.jsonl
+.agent/packets/
+# Agent skill installs (large; lockfile may remain)
+.agents/
+# Test / playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+# Local supabase
+supabase/.branches
+supabase/.temp
+# Scraped operator outreach (contains phone numbers)
+tmp/
+data/operator-outreach/*.csv
+!data/operator-outreach/README.md
+.vercel
+.env*
+# v33 AI factory local/runtime exclusions
+.venv/
+.agent/metrics/*.jsonl
+.agent/local/
+*.db-wal
+*.db-shm
+# AI factory/template internals — never project-tracked
+.agent/
+adapters/
+templates/
+AGENT_FACTORY_BOOTSTRAP.md
+V28_MANIFEST.md
+V29_MANIFEST.md
+V30_MANIFEST.md
+PROJECT_HANDBOOK.template.md
+PROJECT_GOVERNANCE.template.md
+CONTRIBUTING.template.md
+PROJECT_POLICY.template.json
+requirements-agent-factory.txt
+factory
+scripts/factory.py
+scripts/telemetry.py
+scripts/context_engine.py
+scripts/optimization_engine.py
+scripts/model_router.py
+scripts/llm_gateway.py
+scripts/mcp_policy_engine.py
+scripts/configure_agent_harness.py
+scripts/validate_v28.py
+scripts/validate_v29.py
+scripts/validate_v30.py
+config/model-registry.json
+config/agent-model-assignments.json
+config/model-profile-selection.json
+config/automatic-profile-router.json
+config/model-budgets.json
+config/gateway.json
+config/project-tracking.json
+config/context-engine.json
+config/optimization.json
+config/mcp/
+docs/IDE_AGNOSTIC_ARCHITECTURE.md
+docs/MODEL_ROUTING_V28.md
+docs/MODEL_ROUTING_V29.md
+docs/MCP_INTEGRATION_GUIDE.md
+docs/TELEMETRY_PERFORMANCE_INTELLIGENCE_V29.md
+docs/CONTEXT_CACHE_OPTIMIZATION_V29.md
+docs/GITHUB_COLLABORATION_GOVERNANCE_V30.md
+# Legacy/compatibility factory-only files
+config/additional-specialist-agents.json
+config/context-budgets.example.json
+config/cursor-first-independent-review.json
+config/model-profile.balanced-hybrid.json
+config/model-profile.cursor-first.json
+config/model-profile.quality.json
+config/model-profiles.json
+COLLABORATION_GUIDE.template.md
+docs/factory/
+scripts/validate_v31.py
+V31_MANIFEST.md
+# v32 production-hardening factory files
+V32_MANIFEST.md
+scripts/validate_v32.py
+scripts/production_check.py
+scripts/registry_check.py
+scripts/migrations.py
+config/feature-maturity.json
+docs/factory/PRODUCTION_READINESS.md
+tests/test_v32_production.py
+# v33 portability factory files
+config/runtime-registry.json
+scripts/runtime_manager.py
+scripts/validate_v33.py
+tests/test_v33_portability.py
+docs/factory/RUNTIME_AND_GATEWAY_SWITCHING.md
+V33_MANIFEST.md
+AGENTS.template.md
+CLAUDE.template.md
+.cursor/rules/ai-factory-local.mdc
+# v36-v39 Factory Reliability & Intelligence internals
+config/reliability-intelligence.json
+scripts/reliability_engine.py
+scripts/intelligence_engine.py
+scripts/execution_engine.py
+scripts/economics_engine.py
+scripts/validate_v36.py
+scripts/validate_v37.py
+scripts/validate_v38.py
+scripts/validate_v39.py
+tests/test_v39_reliability.py
+docs/factory/RELIABILITY_INTELLIGENCE_V39.md
+V36_MANIFEST.md
+V37_MANIFEST.md
+V38_MANIFEST.md
+V39_MANIFEST.md
+
+
+# v40-v41 factory extensibility engines (factory-owned)
+scripts/agent_registry.py
+scripts/collaboration_engine.py
+scripts/validate_v40.py
+scripts/validate_v41.py
+tests/test_v40_agent_skills.py
+tests/test_v41_collaboration.py
+config/collaboration-policy.json
+docs/factory/AGENT_SKILL_EXTENSIBILITY_V40.md
+docs/factory/MULTI_AGENT_COLLABORATION_V41.md
+V40_MANIFEST.md
+V41_MANIFEST.md
+
+# Project-owned runtime-neutral factory extensions are intentionally NOT ignored:
+# agents/project/  skills/project/  teams/project/
+
+# v43 consolidated factory-owned local files
+V*_MANIFEST.md
+scripts/orchestrator.py
+scripts/workspace.py
+scripts/agent_registry.py
+scripts/collaboration_engine.py
+scripts/control_plane.py
+scripts/env_loader.py
+scripts/consistency_audit.py
+scripts/validate_v*.py
+tests/test_v*.py
+config/collaboration-policy.json
+config/control-plane.json
+# Project extensions remain intentionally trackable: agents/project/, skills/project/, teams/project/
+
+# Safe environment examples are project documentation; local env files remain ignored.
+!.env.example
+!**/.env.example

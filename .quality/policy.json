@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "source_extensions": [
+    ".py",
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx"
+  ],
+  "exclude_globs": [
+    ".git/**",
+    ".agent/**",
+    ".agents/**",
+    ".cursor/**",
+    ".quality/**",
+    ".vercel/**",
+    ".pnpm-store/**",
+    ".venv-pdf/**",
+    ".venv-agent/**",
+    "archive/**",
+    "data/**",
+    "docs/**",
+    "node_modules/**",
+    "**/node_modules/**",
+    ".venv/**",
+    "venv/**",
+    "dist/**",
+    "**/dist/**",
+    "build/**",
+    "**/build/**",
+    "coverage/**",
+    "**/coverage/**",
+    ".next/**",
+    "**/.next/**",
+    "test-results/**",
+    "tmp/**",
+    "supabase/.temp/**",
+    "**/__pycache__/**",
+    "**/migrations/**",
+    "**/*.generated.*",
+    "**/generated/**",
+    "**/*.d.ts",
+    "scripts/**",
+    "apps/app-web/src/stravyx/components/ui/**",
+    "apps/app-web/src/imports/**"
+  ],
+  "exclusion_rationale": {
+    "scripts/**": "PDF/ERD documentation tooling, not shipped product code. Twelve build_pdf generators exceed the 80-line function limit by design as linear document builders; splitting them is churn with no product benefit. See docs/adr/0004-governed-autonomous-engineering.md.",
+    "apps/app-web/src/stravyx/components/ui/**": "Vendored shadcn primitives kept close to upstream so they can be re-synced. Local restructuring makes that harder.",
+    "apps/app-web/src/imports/**": "Generated Figma asset exports.",
+    "archive/**": "Frozen narrative history from prior agent chats.",
+    "tmp/**": "Scratch comparison checkouts; gitignored."
+  },
+  "rules": {
+    "forbid_typescript_any": true,
+    "forbid_double_assertions": true,
+    "forbid_unqualified_suppressions": true,
+    "forbid_python_any": true,
+    "forbid_swallowed_exceptions": true,
+    "require_issue_tag_for_todo": true,
+    "max_python_function_lines": 80,
+    "max_source_file_lines": 600
+  },
+  "fallback_sensitive_globs": [
+    "packages/types/src/pricing.ts",
+    "packages/types/src/visibility.ts",
+    "packages/types/src/mission-authz.ts",
+    "supabase/functions/api/**"
+  ],
+  "architecture_boundaries": [
+    {
+      "name": "domain-types-stay-pure",
+      "from_glob": "packages/types/src/**",
+      "forbidden_import_prefixes": [
+        "react",
+        "next",
+        "@supabase/supabase-js",
+        "@stravyx/api-client"
+      ],
+      "reason": "packages/types is the shared domain layer for pricing, visibility projectors and mission authz. It must remain framework- and transport-free so backend, Edge and browser all evaluate the same rules."
+    },
+    {
+      "name": "api-client-is-transport-only",
+      "from_glob": "packages/api-client/src/**",
+      "forbidden_import_prefixes": [
+        "react",
+        "next",
+        "@supabase/supabase-js"
+      ],
+      "reason": "packages/api-client is a stable /api REST surface. Binding it to a UI framework or the Supabase SDK would couple every consumer to one runtime."
+    },
+    {
+      "name": "components-must-use-api-client",
+      "from_glob": "apps/app-web/src/stravyx/components/**",
+      "forbidden_import_prefixes": [
+        "@supabase/supabase-js",
+        "@/lib/supabase"
+      ],
+      "reason": "Marketplace money and mission logic must go through packages/api-client and the Edge API, never PostgREST from a component. Session wiring belongs in App.tsx. This is the visibility firewall expressed as a dependency rule."
+    },
+    {
+      "name": "edge-api-has-no-browser-client",
+      "from_glob": "supabase/functions/**",
+      "forbidden_import_prefixes": [
+        "react",
+        "next",
+        "@stravyx/api-client"
+      ],
+      "reason": "Edge handlers are the authoritative server boundary. Importing the browser REST client or a UI framework there would invert the trust direction."
+    }
+  ],
+  "waiver_file": ".quality/exceptions.json"
+}

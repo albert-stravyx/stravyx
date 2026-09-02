@@ -1,0 +1,9 @@
+{
+  "look": "neo",
+  "theme": "default",
+  "layout": "elk",
+  "fontFamily": "Recursive, \"Trebuchet MS\", ui-sans-serif, system-ui, sans-serif",
+  "elk": { "mergeEdges": true, "nodePlacementStrategy": "NETWORK_SIMPLEX" },
+  "er": { "useMaxWidth": false },
+  "sequence": { "useMaxWidth": false }
+}

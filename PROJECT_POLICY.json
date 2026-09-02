@@ -1,0 +1,168 @@
+{
+  "schema_version": 3,
+  "policy_name": "Stravyx project governance",
+  "required_project_files": [
+    "PROJECT_HANDBOOK.md",
+    "PROJECT_GOVERNANCE.md",
+    "CONTRIBUTING.md",
+    "COLLABORATION_GUIDE.md",
+    "PROJECT_POLICY.json",
+    "AGENTS.md",
+    "CLAUDE.md"
+  ],
+  "forbidden_tracked_globs": [
+    ".agent/**",
+    "adapters/**",
+    "factory",
+    "AGENT_FACTORY_BOOTSTRAP.md",
+    "CURSOR_BOOTSTRAP_PROMPT.md",
+    "V*_MANIFEST.md",
+    "requirements-agent-factory.txt",
+    "docs/factory/**",
+    "templates/**",
+    "AGENTS.template.md",
+    "CLAUDE.template.md",
+    "PROJECT_HANDBOOK.template.md",
+    "PROJECT_GOVERNANCE.template.md",
+    "CONTRIBUTING.template.md",
+    "COLLABORATION_GUIDE.template.md",
+    "PROJECT_POLICY.template.json",
+    ".cursor/rules/ai-factory-local.mdc",
+    "scripts/factory.py",
+    "scripts/telemetry.py",
+    "scripts/context_engine.py",
+    "scripts/optimization_engine.py",
+    "scripts/model_router.py",
+    "scripts/llm_gateway.py",
+    "scripts/mcp_policy_engine.py",
+    "scripts/configure_agent_harness.py",
+    "scripts/production_check.py",
+    "scripts/registry_check.py",
+    "scripts/migrations.py",
+    "scripts/runtime_manager.py",
+    "scripts/orchestrator.py",
+    "scripts/workspace.py",
+    "scripts/reliability_engine.py",
+    "scripts/intelligence_engine.py",
+    "scripts/execution_engine.py",
+    "scripts/economics_engine.py",
+    "scripts/agent_registry.py",
+    "scripts/collaboration_engine.py",
+    "scripts/control_plane.py",
+    "scripts/env_loader.py",
+    "scripts/consistency_audit.py",
+    "scripts/validate_v*.py",
+    "tests/test_v*.py",
+    "config/model-registry.json",
+    "config/agent-model-assignments.json",
+    "config/model-profile-selection.json",
+    "config/automatic-profile-router.json",
+    "config/model-budgets.json",
+    "config/gateway.json",
+    "config/project-tracking.json",
+    "config/context-engine.json",
+    "config/optimization.json",
+    "config/mcp/**",
+    "config/additional-specialist-agents.json",
+    "config/context-budgets.example.json",
+    "config/feature-maturity.json",
+    "config/runtime-registry.json",
+    "config/reliability-intelligence.json",
+    "config/collaboration-policy.json",
+    "config/control-plane.json",
+    "*.db",
+    "*.db-wal",
+    "*.db-shm",
+    ".env*",
+    ".venv-agent/**"
+  ],
+  "architecture": {
+    "adr_directory": "docs/adr",
+    "sensitive_globs": [
+      "src/**/architecture/**",
+      "app/**/architecture/**",
+      "packages/**/architecture/**",
+      "infrastructure/**",
+      "infra/**",
+      "database/schema/**"
+    ],
+    "require_adr_for_sensitive_change": true
+  },
+  "database": {
+    "migration_globs": [
+      "migrations/**",
+      "database/migrations/**",
+      "supabase/migrations/**"
+    ],
+    "destructive_keywords": [
+      "DROP TABLE",
+      "DROP COLUMN",
+      "TRUNCATE",
+      "DELETE FROM"
+    ],
+    "destructive_change_severity": "R4"
+  },
+  "security": {
+    "critical_keywords": [
+      "authorization",
+      "authentication",
+      "RBAC",
+      "cryptography",
+      "privilege",
+      "secret",
+      "payment"
+    ],
+    "critical_change_severity": "R4",
+    "independent_review_required": true
+  },
+  "quality": {
+    "do_not_weaken_ci_to_pass": true,
+    "tests_expected_for_behavior_change": true
+  },
+  "factory_independence": {
+    "project_must_not_require_factory_for_normal_build_test_deploy": true,
+    "factory_internal_globs_are_forbidden_in_project_git": true
+  },
+  "required_artifacts": [
+    "AGENTS.md",
+    "CLAUDE.md"
+  ],
+  "project": "stravyx",
+  "required_files": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "skills-lock.json"
+  ],
+  "project_constraints": {
+    "human_delivery_gates": [
+      "git_commit",
+      "git_push",
+      "git_merge",
+      "release",
+      "deployment",
+      "production_mutation",
+      "infrastructure_apply",
+      "destructive_operation"
+    ],
+    "architecture_change_requires_adr": true,
+    "new_production_dependency_requires_approval": true,
+    "frontend_production_diff_requires": "senior-frontend-reviewer",
+    "high_risk_cross_family_review": true,
+    "mcp_production_write_requires_human_approval": true,
+    "domain_invariants": [
+      "first_to_accept_dispatch",
+      "integer_cents",
+      "structural_visibility_firewall",
+      "roles_from_app_metadata",
+      "packages_api_client_boundary",
+      "hubspot_one_way_after_persist"
+    ]
+  },
+  "allowed_tracked_globs": [
+    ".env.example",
+    "agents/project/**",
+    "skills/project/**",
+    "teams/project/**",
+    "apps/app-web/.env.example"
+  ]
+}

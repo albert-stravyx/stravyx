@@ -1,0 +1,79 @@
+project:
+  name: stravyx
+  profile: fullstack
+
+stack:
+  frontend: nextjs/typescript
+  backend: supabase-edge/deno
+  data: postgresql
+  cloud: vercel+supabase
+  ai: disabled
+  containers: targeted_if_justified
+
+# Specialists are enabled because the responsibility exists in this phase,
+# not to collect technologies. Mobile / data / AI are Phase 1B targets with
+# no present code — see docs/CURRENT_STATE.md.
+agents:
+  frontend: true
+  accessibility: true
+  backend: true
+  ai: false
+  ai_evals: false
+  devops_cloud: false
+  data: false
+  mobile: false
+
+quality:
+  lint: required
+  typecheck: as_applicable
+  strong_typing_required: true
+  unit_tests: required
+  integration_tests: as_applicable
+  bdd: required_for_business_flows
+  e2e: required_for_critical_user_flows
+  accessibility: wcag-2.2-aa
+  security_review: required_for_sensitive_changes
+  ai_evals: not-applicable
+  failure_path_tests_required: true
+  actionable_error_contract_required: true
+  cross_model_review_for_high_risk: true
+
+autonomy:
+  default_mode: assisted
+  orchestrator_self_implementation: approval_required
+  max_nested_depth: 3
+  max_implementation_iterations: 8
+  max_remediation_cycles: 5
+  max_same_failure_repetitions: 2
+  max_parallel_writers: 3
+  require_worktrees_for_parallel_writes: true
+
+delivery:
+  autonomous_commit: false
+  autonomous_push: false
+  autonomous_merge: false
+  autonomous_deploy: false
+
+type_safety:
+  python: "not applicable to product code; scripts/ is doc tooling and excluded from the quality guard"
+  typescript: "tsc --noEmit via `pnpm typecheck`"
+  external_data: "runtime validation at the Edge boundary before trusted domain use"
+
+# Stravyx-specific invariants that outrank generic template defaults.
+# Full statements live in AGENTS.md and .cursor/rules/00-project-context.mdc.
+domain_invariants:
+  dispatch: first-to-accept
+  money_representation: integer_cents
+  visibility_firewall: "@stravyx/types projectors + Edge + RLS, never UI-only"
+  roles_source: app_metadata
+  marketplace_client: "packages/api-client only"
+  hubspot: one_way_after_persist
+
+metrics:
+  enabled: true
+  storage: .agent/local/factory.db
+  external_telemetry: false
+  record_tokens_when_available: true
+  fabricate_missing_usage: false
+  optimisation_review_after_tasks: 30
+  primary_goal: accepted_change_efficiency

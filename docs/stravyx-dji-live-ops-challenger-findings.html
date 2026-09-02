@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stravyx — Live-ops independent review</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stravyx-briefing.css">
+<style>
+/* Shared Stravyx briefing stylesheet (E Security dock-pilot visual language).
+   Each HTML also inlines this so a single file can be emailed or opened offline. */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-border:rgba(29,158,117,0.25);--teal-deep:#085041;
+  --charcoal:#1A1A18;--mid:#5F5E5A;--soft:#9A9990;
+  --off-white:#F7F6F2;--white:#FFFFFF;
+  --border:rgba(26,26,24,0.1);--border-strong:rgba(26,26,24,0.18);
+  --amber:#B07020;--amber-light:#FBF3E7;--amber-border:rgba(176,112,32,0.25);
+  --red:#B83228;--red-light:#FDEEEC;--red-border:rgba(184,50,40,0.2);
+  --blue:#1A5CA8;--blue-light:#EAF1FB;--blue-border:rgba(26,92,168,0.2);
+  --green:#2A6049;--mint:#5DCAA5;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--charcoal);font-size:15px;line-height:1.65;}
+header{background:var(--charcoal);padding:52px max(64px, calc(50% - 456px)) 44px;}
+.header-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+header h1{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;line-height:1.2;color:#fff;max-width:760px;margin-bottom:10px;}
+header h1 em{color:var(--mint);font-style:italic;}
+header p{font-size:15px;color:rgba(255,255,255,0.55);max-width:640px;margin-bottom:24px;line-height:1.6;}
+.header-meta{display:flex;gap:40px;flex-wrap:wrap;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);}
+.meta-item{font-size:13px;color:rgba(255,255,255,0.4);}
+.meta-item span{color:rgba(255,255,255,0.85);font-weight:500;}
+main{padding:52px 64px 72px;max-width:1040px;margin:0 auto;}
+.section{margin-bottom:52px;}
+.section-header{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.section-num{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);min-width:28px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--charcoal);}
+.section-sub{font-size:13.5px;color:var(--soft);margin-top:-14px;margin-bottom:22px;max-width:720px;}
+.parties{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.parties th{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);padding:12px 16px;border-bottom:1px solid var(--border);background:var(--off-white);text-align:left;}
+.parties td{font-size:13.5px;color:#4A4A47;padding:16px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;}
+.parties tr:last-child td{border-bottom:none;}
+.entity-name{font-family:'DM Serif Display',serif;font-size:16px;color:var(--charcoal);margin-bottom:4px;}
+.entity-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:2px;}
+.tag-customer{background:var(--blue-light);color:var(--blue);}
+.tag-supplier{background:var(--amber-light);color:var(--amber);}
+.tag-operator{background:var(--red-light);color:var(--red);}
+.tag-stravyx{background:var(--teal-light);color:var(--teal-deep);}
+.tag-blocker{background:var(--red-light);color:var(--red);}
+.tag-high{background:var(--amber-light);color:var(--amber);}
+.tag-medium{background:var(--blue-light);color:var(--blue);}
+.tag-never{background:var(--red-light);color:var(--red);}
+.tag-ok{background:var(--teal-light);color:var(--teal-deep);}
+.provide-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.provide-card{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:0 12px 12px 0;padding:18px 22px;}
+.provide-card h4{font-size:13.5px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.provide-card p{font-size:13px;color:var(--mid);line-height:1.6;}
+.not-card{background:var(--off-white);border:1px dashed var(--border-strong);border-radius:12px;padding:18px 22px;margin-top:16px;}
+.not-card h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);margin-bottom:6px;}
+.not-card p,.not-card li{font-size:13px;color:var(--mid);}
+.not-card ul{margin:6px 0 0 18px;}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.status-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
+.status-col.done h4{color:var(--teal);}
+.status-col.open h4{color:var(--amber);}
+.status-item{display:flex;gap:10px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:13.5px;color:#4A4A47;line-height:1.5;}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.dot-done{background:var(--teal);}
+.dot-open{background:var(--amber);}
+.dot-block{background:var(--red);}
+.status-item strong{color:var(--charcoal);}
+.callout{border-radius:8px;padding:14px 18px;font-size:13.5px;line-height:1.65;margin-top:18px;}
+.c-amber{background:var(--amber-light);border-left:3px solid var(--amber);color:#7A4510;}
+.c-teal{background:var(--teal-light);border-left:3px solid var(--teal);color:var(--teal-deep);}
+.c-red{background:var(--red-light);border-left:3px solid var(--red);color:#7A241C;}
+.c-blue{background:var(--blue-light);border-left:3px solid var(--blue);color:#143F78;}
+.callout strong{font-weight:600;}
+.story{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;}
+.story .who{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.story h4{font-family:'DM Serif Display',serif;font-size:18px;color:var(--charcoal);margin-bottom:8px;}
+.story p{font-size:13.5px;color:#4A4A47;}
+.finding{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:16px;}
+.finding h4{font-family:'DM Serif Display',serif;font-size:18px;margin:8px 0 10px;}
+.finding p{font-size:13.5px;color:#4A4A47;margin-bottom:10px;}
+.finding .label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-top:12px;margin-bottom:4px;}
+.prose{font-size:14.5px;color:#4A4A47;max-width:760px;}
+.prose p{margin-bottom:12px;}
+.prose ol,.prose ul{margin:0 0 14px 20px;}
+.prose li{margin-bottom:6px;}
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.doc-link{display:block;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px 24px;text-decoration:none;color:inherit;}
+.doc-link:hover{border-color:var(--teal);}
+.doc-link .who{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.doc-link h3{font-family:'DM Serif Display',serif;font-size:20px;color:var(--charcoal);margin-bottom:8px;}
+.doc-link p{font-size:13.5px;color:var(--mid);}
+.pack-meta{font-size:12px;color:var(--soft);margin-top:12px;font-family:'DM Mono',monospace;}
+footer{max-width:1040px;margin:0 auto;padding:24px 64px 40px;font-size:12px;color:var(--soft);border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:'DM Mono',monospace;}
+footer a{color:var(--teal-deep);}
+@media(max-width:800px){header,main,footer{padding-left:20px;padding-right:20px;}.provide-grid,.status-grid,.doc-grid{grid-template-columns:1fr;}}
+@media print{header{padding:28px 24px;}main,footer{padding-left:24px;padding-right:24px;}a{color:inherit;}}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Internal · Reference · Independent challenge</div>
+  <h1>Keep the plan. <em>Tighten ten points before live ingest.</em></h1>
+  <p>Verdict: support with conditions. Cloud API + manual is still right. FlightHub 2 still later. No NestJS/MQTT until Phase 1B and privacy approval. Two blockers must be designed before live radio or auto-upload.</p>
+  <div class="header-meta">
+    <div class="meta-item">Reviewer <span>Architecture-challenger (independent)</span></div>
+    <div class="meta-item">As at <span>16 August 2026</span></div>
+    <div class="meta-item">Does not change <span>ADR 0005 direction</span></div>
+  </div>
+</header>
+
+<main>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">What this review was for</span></div>
+  <div class="prose">
+    <p>An independent reviewer tried to <strong>break</strong> the plan: drones report to Stravyx (Cloud API); everyone else uses manual upload. They were not asked to agree. They were asked: where could two companies see each other’s jobs? Where could photos land on the wrong booking? Where are we promising something the spare tyre cannot actually do?</p>
+  </div>
+  <div class="provide-grid" style="margin-top:18px;">
+    <div class="provide-card">
+      <h4>How to read a finding</h4>
+      <p>Picture (shop-floor analogy) → problem → recommended fix → two alternatives → who decides.</p>
+    </div>
+    <div class="provide-card">
+      <h4>Severity</h4>
+      <p><strong>BLOCKER</strong> — do not turn on live MQTT / auto-upload until designed. <strong>HIGH</strong> — smaller slice can ship; do not half-finish for customers. <strong>MEDIUM</strong> — shape the design now.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">The ten findings</span></div>
+
+  <div class="finding">
+    <span class="entity-tag tag-blocker">Blocker</span>
+    <h4>A-01 — Keep each drone company’s room private</h4>
+    <p><strong>Picture.</strong> Alex and Brooke must not share hotel keys. MQTT access lists are necessary but not enough — login, list-devices, and upload keys are ordinary web requests.</p>
+    <div class="label">Recommended fix (S2)</div>
+    <p>Each ReOC gets its own logical Cloud API workspace. The server decides the room from the login token — never from a company ID typed in the URL. Moving a drone between companies is an audited handover.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. Per-company rooms vs accept shared-room risk.</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-blocker">Blocker</span>
+    <h4>A-02 — The handset that asks for the upload key must own the aircraft</h4>
+    <p><strong>Picture.</strong> Photos for SN-123 should go only to that job. Controllers can be re-paired. Binding the aircraft at “allocated” does not prove <em>this</em> controller currently flies it.</p>
+    <div class="label">Recommended fix (S2→S3)</div>
+    <p>Short-lived <strong>capture session</strong>: company + controller + aircraft + job. Upload keys write only into that session folder. The “upload finished” report carries the same session id.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. Approve the session model and how fresh pairing must be.</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-high">High</span>
+    <h4>A-03 — Manual upload is a spare tyre, not a second sports car</h4>
+    <p>Manual always delivers booking, accept, progress <em>labels</em>, and raw photos. It cannot deliver a live map pin. Never let “is the drone online?” change who wins or the price.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. Live-ops A promises live-map parity, or only completion + files?</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-high">High</span>
+    <h4>A-04 — “Allocated” is planning, not “this flight is live”</h4>
+    <p>Monday’s assignment to Thursday’s job must not lock the aircraft as the live flight forever. Keep planned assignment; use the capture session as the only lock for live upload and tracking.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. Must we support several future scheduled missions on the same aircraft?</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-high">High</span>
+    <h4>A-05 — Winning the job must be all-or-nothing</h4>
+    <p>First-to-accept is a race. Accept, status change, and Release must be one database transaction with an idempotency key. Nightly cleanup of half-written rows is unacceptable.</p>
+    <div class="label">Who decides</div>
+    <p>No. Follows existing marketplace rules.</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-high">High</span>
+    <h4>A-06 — One way to name a file in storage</h4>
+    <p>Do not ship <code>storage_path</code>, <code>s3_key</code>, and <code>provider + object_key</code> as three ideas. Store a provider-neutral address from S0. Download links are always minted by our server.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. Which storage provider, and do we migrate or start on the final cupboard?</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-high">High</span>
+    <h4>A-07 — “Upload finished” texts can get lost</h4>
+    <p>Ignoring a duplicate postcard does not find a missing one. Keep a durable inbox and periodically walk the session folder. Closing a session includes “we expected these files.”</p>
+    <div class="label">Who decides</div>
+    <p>No. Use inbox + folder scan.</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-high">High</span>
+    <h4>A-08 — “Held” is not the same as “safe to open”</h4>
+    <p>Quarantine today only means the customer cannot download yet. Land files privately, check type/size/magic bytes, hash, scan malware <em>before</em> Release.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. Formats, size limits, scanner, retention.</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-medium">Medium</span>
+    <h4>A-09 — Do not force manual to pretend it is a live drone</h4>
+    <p>Split plugs: status reporter, file ingress, device connector, live position source. Manual implements the first two. DJI implements all four.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. Contract change needs Program Design (named in ADR 0005).</p>
+  </div>
+
+  <div class="finding">
+    <span class="entity-tag tag-medium">Medium</span>
+    <h4>A-10 — We have not yet proved the bill</h4>
+    <p>Write costs at 1 / 100 / 1,000 devices for our Cloud API vs a verified FlightHub Business quote vs manual-only. Keep FH2 deferred unless the numbers change Live-ops A.</p>
+    <div class="label">Who decides</div>
+    <p>Yes. What cost/risk threshold lets us go past a pilot?</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">In what order</span></div>
+  <table class="parties">
+    <tr><th style="width:36%;">When</th><th>Close these</th></tr>
+    <tr><td><strong>Before customers download real files (S0)</strong></td><td>A-05 all-or-nothing commands; A-06 one file address; A-08 safe-to-open</td></tr>
+    <tr><td><strong>While designing S1</strong></td><td>A-03 honest spare-tyre promise; A-09 split plugs</td></tr>
+    <tr><td><strong>Before live bind (S2)</strong></td><td>APP 8; A-01 private rooms; A-04 planning vs live lock; A-05; A-10 cost check</td></tr>
+    <tr><td><strong>Before automatic photo upload (S3)</strong></td><td>A-02 capture session; S3 storage adapter; A-07 lost-postcard scan; A-08 on device files</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Human decisions still open</span></div>
+  <div class="status-col open">
+    <div class="status-item"><span class="status-dot dot-open"></span><span>Per-ReOC Cloud API rooms vs one shared room (A-01).</span></div>
+    <div class="status-item"><span class="status-dot dot-open"></span><span>Capture-session rules and how fresh pairing must be (A-02).</span></div>
+    <div class="status-item"><span class="status-dot dot-open"></span><span>Live-ops A: live map promised, or only completion + files (A-03).</span></div>
+    <div class="status-item"><span class="status-dot dot-open"></span><span>Several future planned jobs on the same aircraft? (A-04).</span></div>
+    <div class="status-item"><span class="status-dot dot-open"></span><span>Storage provider and whether we migrate (A-06).</span></div>
+    <div class="status-item"><span class="status-dot dot-open"></span><span>File types, size limits, scanner, retention (A-08).</span></div>
+    <div class="status-item"><span class="status-dot dot-open"></span><span>Split flight-provider contracts (A-09 / Program Design).</span></div>
+    <div class="status-item"><span class="status-dot dot-open"></span><span>Cost threshold past a Cloud API pilot (A-10).</span></div>
+  </div>
+  <div class="not-card">
+    <h4>What we will not do</h4>
+    <p>Trust a company id in a URL · hand out upload keys from last-paired · treat postcards as the only proof a file exists · let customers download held files before type/malware checks · invent fake live-drone data on the manual path · rank dispatch by device-online · start NestJS/MQTT/FlightHub before Phase 1B and privacy · change the recommendation.</p>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div>Stravyx Pty Ltd · ACN 696 964 271</div>
+  <div><a href="stravyx-live-ops-briefings.html">Live-ops pack</a> · <a href="stravyx-dji-live-ops-challenger-findings.pdf">PDF</a></div>
+</footer>
+
+</body>
+</html>

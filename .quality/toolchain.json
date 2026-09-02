@@ -1,0 +1,38 @@
+{
+  "gates": [
+    {
+      "name": "code-quality-guard",
+      "command": [
+        "python",
+        "scripts/code_quality_guard.py"
+      ],
+      "required": true,
+      "suggested_action": "Fix the project quality finding or use only a reviewed time-bounded exception."
+    },
+    {
+      "name": "architecture-guard",
+      "command": [
+        "python",
+        "scripts/architecture_guard.py"
+      ],
+      "required": true,
+      "suggested_action": "Restore the approved dependency boundary or approve an ADR change."
+    },
+    {
+      "name": "project-control-plane-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/control-plane",
+        "-t",
+        "tests/control-plane",
+        "-v"
+      ],
+      "required": true,
+      "suggested_action": "Repair project-specific guardrail behavior without weakening tests."
+    }
+  ]
+}

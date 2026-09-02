@@ -1,0 +1,155 @@
+{
+  "version": 3,
+  "verified_against_cursor": "2026-08-22",
+  "availability_note": "Slugs verified against the model set exposed to the Cursor subagent runtime. Rationale: docs/agent-model-assignments.md. validate_model_config.py requires assignments == profiles[active_profile] and a one-to-one match with .cursor/agents/*.md frontmatter. Edit profiles, then run scripts/switch_model_profile.py \u2014 never hand-edit assignments or agent model lines.",
+  "active_profile": "economy",
+  "known_current_models": [
+    "inherit",
+    "claude-fable-5-thinking-high",
+    "claude-opus-5-thinking-high",
+    "claude-sonnet-5-thinking-high",
+    "gpt-5.6-sol-high",
+    "gpt-5.6-terra-medium",
+    "gpt-5.3-codex",
+    "gemini-3.1-pro",
+    "gemini-3.7-flash-high",
+    "cursor-grok-4.6-high",
+    "cursor-grok-4.6-high-fast",
+    "composer-2.5-fast"
+  ],
+  "model_families": {
+    "claude": [
+      "claude-fable-5-thinking-high",
+      "claude-opus-5-thinking-high",
+      "claude-sonnet-5-thinking-high"
+    ],
+    "gpt": [
+      "gpt-5.6-sol-high",
+      "gpt-5.6-terra-medium",
+      "gpt-5.3-codex"
+    ],
+    "gemini": [
+      "gemini-3.1-pro",
+      "gemini-3.7-flash-high"
+    ],
+    "grok": [
+      "cursor-grok-4.6-high",
+      "cursor-grok-4.6-high-fast"
+    ],
+    "composer": [
+      "composer-2.5-fast"
+    ]
+  },
+  "fallback": {
+    "unavailable_specific_model": "cursor-grok-4.6-high",
+    "cost_sensitive_research": "composer-2.5-fast",
+    "high_uncertainty": "cursor-grok-4.6-high"
+  },
+  "profile_fallbacks": {
+    "quality": {
+      "unavailable_specific_model": "inherit",
+      "cost_sensitive_research": "composer-2.5-fast",
+      "high_uncertainty": "inherit"
+    },
+    "economy": {
+      "unavailable_specific_model": "cursor-grok-4.6-high",
+      "cost_sensitive_research": "composer-2.5-fast",
+      "high_uncertainty": "cursor-grok-4.6-high"
+    }
+  },
+  "profiles": {
+    "quality": {
+      "autonomous-orchestrator": "claude-fable-5-thinking-high",
+      "engineering-manager": "claude-opus-5-thinking-high",
+      "product-analyst": "claude-sonnet-5-thinking-high",
+      "architect": "claude-opus-5-thinking-high",
+      "architecture-challenger": "gpt-5.6-sol-high",
+      "program-designer": "claude-sonnet-5-thinking-high",
+      "frontend-engineer": "claude-sonnet-5-thinking-high",
+      "senior-frontend-reviewer": "gpt-5.6-terra-medium",
+      "backend-engineer": "gpt-5.3-codex",
+      "backend-ai-engineer": "gpt-5.3-codex",
+      "senior-backend-reviewer": "claude-opus-5-thinking-high",
+      "senior-ai-reviewer": "claude-opus-5-thinking-high",
+      "test-engineer": "composer-2.5-fast",
+      "bounded-test-implementer": "composer-2.5-fast",
+      "test-case-researcher": "gemini-3.7-flash-high",
+      "codebase-researcher": "composer-2.5-fast",
+      "ai-eval-analyst": "gemini-3.1-pro",
+      "accessibility-reviewer": "gpt-5.6-terra-medium",
+      "security-reviewer": "gemini-3.1-pro",
+      "code-reviewer": "cursor-grok-4.6-high-fast",
+      "devops-cloud-engineer": "gpt-5.6-sol-high",
+      "data-engineer": "gpt-5.3-codex",
+      "mobile-engineer": "claude-sonnet-5-thinking-high"
+    },
+    "economy": {
+      "autonomous-orchestrator": "cursor-grok-4.6-high",
+      "engineering-manager": "cursor-grok-4.6-high",
+      "product-analyst": "composer-2.5-fast",
+      "architect": "cursor-grok-4.6-high",
+      "architecture-challenger": "claude-sonnet-5-thinking-high",
+      "program-designer": "cursor-grok-4.6-high",
+      "frontend-engineer": "cursor-grok-4.6-high",
+      "senior-frontend-reviewer": "gemini-3.7-flash-high",
+      "backend-engineer": "cursor-grok-4.6-high",
+      "backend-ai-engineer": "composer-2.5-fast",
+      "senior-backend-reviewer": "gemini-3.1-pro",
+      "senior-ai-reviewer": "gemini-3.1-pro",
+      "test-engineer": "composer-2.5-fast",
+      "bounded-test-implementer": "composer-2.5-fast",
+      "test-case-researcher": "composer-2.5-fast",
+      "codebase-researcher": "composer-2.5-fast",
+      "ai-eval-analyst": "gemini-3.7-flash-high",
+      "accessibility-reviewer": "composer-2.5-fast",
+      "security-reviewer": "gemini-3.1-pro",
+      "code-reviewer": "composer-2.5-fast",
+      "devops-cloud-engineer": "cursor-grok-4.6-high",
+      "data-engineer": "composer-2.5-fast",
+      "mobile-engineer": "composer-2.5-fast"
+    }
+  },
+  "assignments": {
+    "autonomous-orchestrator": "cursor-grok-4.6-high",
+    "engineering-manager": "cursor-grok-4.6-high",
+    "product-analyst": "composer-2.5-fast",
+    "architect": "cursor-grok-4.6-high",
+    "architecture-challenger": "claude-sonnet-5-thinking-high",
+    "program-designer": "cursor-grok-4.6-high",
+    "frontend-engineer": "cursor-grok-4.6-high",
+    "senior-frontend-reviewer": "gemini-3.7-flash-high",
+    "backend-engineer": "cursor-grok-4.6-high",
+    "backend-ai-engineer": "composer-2.5-fast",
+    "senior-backend-reviewer": "gemini-3.1-pro",
+    "senior-ai-reviewer": "gemini-3.1-pro",
+    "test-engineer": "composer-2.5-fast",
+    "bounded-test-implementer": "composer-2.5-fast",
+    "test-case-researcher": "composer-2.5-fast",
+    "codebase-researcher": "composer-2.5-fast",
+    "ai-eval-analyst": "gemini-3.7-flash-high",
+    "accessibility-reviewer": "composer-2.5-fast",
+    "security-reviewer": "gemini-3.1-pro",
+    "code-reviewer": "composer-2.5-fast",
+    "devops-cloud-engineer": "cursor-grok-4.6-high",
+    "data-engineer": "composer-2.5-fast",
+    "mobile-engineer": "composer-2.5-fast"
+  },
+  "cross_model_policy": {
+    "normal_tasks": {
+      "different_agent_required": true,
+      "different_model_family_preferred": true
+    },
+    "high_risk_tasks": {
+      "different_agent_required": true,
+      "different_model_family_required": true
+    },
+    "architecture": {
+      "challenger_required": true,
+      "different_model_family_required": true
+    },
+    "ai_evaluation": {
+      "production_model_may_not_be_sole_judge": true
+    },
+    "self_approval_prohibited": true
+  }
+}
